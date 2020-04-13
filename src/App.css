@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.main-header {
+  margin: 5%;
+}
+
+.title {
+  margin: 5% auto 2% auto;
+}
+
+.home {
+  margin: 0 auto 3% auto;
+}
+
+.description {
+  margin: 1%;
+}
+
+.footer {
+  margin: 1%;
+}
+
+.books-column {
+  margin: 0 auto;
+  width: 75%;
+}
