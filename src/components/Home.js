@@ -1,23 +1,35 @@
-import React, { useEffect } from 'react';
-import Cards from './Cards'
-import { useFetchLists } from '../hooks/index'
+import React from 'react';
+import { useHistory } from 'react-router-dom'
+import Cards from './Cards';
 
-const Home = () => {
-    const response = useFetchLists()
+const Home = ({ loading, categories, dispatch }) => {
+    let history = useHistory();
+    
+    const onClick = (event, text) => {
+        event.preventDefault()
+        const api = '/api/nyt/categories/' + text;
 
-    function bestsellerLists() {
-        if (response.results) {
-            console.log('app.js, res value', response.results)
-            return <Cards data={response.results} />
-        }
-    }
+        dispatch({ type: "FETCHING" });
+        fetch(api)
+            .then(res => res.json())
+            .then(res => {
+                dispatch({ type: "BOOKS_RECEIVED", data: res.results });
+            });
+
+        history.push('/bestsellers');
+    };
 
     return (
         <div className="App">
             <h1 className='main-header'>NY Times Bestsellers</h1>
             <ul>
                 {
-                    bestsellerLists()
+                    loading &&
+                    <div>Loading...</div>
+                }
+                {
+                    (!loading && categories) &&
+                    <Cards data={categories} onClick={onClick} />
                 }
             </ul>
         </div>
